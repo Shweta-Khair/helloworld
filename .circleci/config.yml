@@ -14,7 +14,7 @@ jobs:
             # Fallback to general Maven cache if exact match isn't found
             - maven-
       - run:
-          command: mvn clean install
+          command: mvn clean package
 
       - save_cache:
           paths:
