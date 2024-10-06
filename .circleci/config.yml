@@ -9,6 +9,10 @@ jobs:
       - checkout
       - run:
           command: mvn clean install
+      - store_artifacts:
+          path: target/helloworld-1.1.jar
+          #destination: artifact-file
+    
      
 workflows:
   build-and-test:
