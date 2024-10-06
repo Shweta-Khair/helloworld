@@ -1,37 +1,19 @@
 # This config was automatically generated from your source code
 # Stacks detected: deps:java:.
 version: 2.1
-jobs:
-  test-java:
-    docker:
-      - image: cimg/openjdk:17.0
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            # Try to restore from the exact pom.xml checksum cache
-            - maven-{{ checksum "pom.xml" }}
-            # Fallback to general Maven cache if exact match isn't found
-            - maven-
-      - run:
-          command: mvn clean package
+orbs:
+   maven: circleci/maven@1.4.1
 
-      - save_cache:
-          paths:
-            # Cache the Maven local repository (~/.m2)
-            - ~/.m2
-          key: maven-{{ checksum "pom.xml" }}
-      - store_artifacts:
-          path: target/helloworld-1.1.jar
-          #destination: artifact-file
-
-        
-    
-     
 workflows:
-  build-and-test:
+  maven_test:
     jobs:
-      - test-java
+      - maven/test:
+          command: 'clean package'
+     
+#workflows:
+ # build-and-test:
+  #  jobs:
+   #   - test-java
     # - deploy:
     #     requires:
     #       - test-java
