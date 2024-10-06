@@ -7,11 +7,25 @@ jobs:
       - image: cimg/openjdk:17.0
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            # Try to restore from the exact pom.xml checksum cache
+            - maven-{{ checksum "pom.xml" }}
+            # Fallback to general Maven cache if exact match isn't found
+            - maven-
       - run:
           command: mvn clean install
+
+      - save_cache:
+          paths:
+            # Cache the Maven local repository (~/.m2)
+            - ~/.m2
+          key: maven-{{ checksum "pom.xml" }}
       - store_artifacts:
           path: target/helloworld-1.1.jar
           #destination: artifact-file
+
+        
     
      
 workflows:
