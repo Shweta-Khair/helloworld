@@ -10,7 +10,7 @@ jobs:
     #docker:
      # - image: cimg/openjdk:17.0
     machine: true
-    resource_class: almnamespace/circleci
+    resource_class: almnamespace/selfhosted
     steps:
       - checkout
       - restore_cache:
